@@ -1,0 +1,1 @@
+PASS: 1.1.0 release extracted into another path containing spaces; backend UP on 8082; PC homepage HTTP 200; APK, WeChat ZIP and mobile instructions present. Java runtime and MySQL reused from host. Checked 2026-10-20 on Windows.

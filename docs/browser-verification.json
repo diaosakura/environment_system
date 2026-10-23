@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "checkedAt": "2026-10-20T02:56:34.915Z",
+  "base": "http://localhost:8080",
+  "checks": [
+    "PC exposes only management and visualization; removed mobile routes redirect home",
+    "PC login forces administrator role even with old role query parameters",
+    "Administrator filtering, personnel, logs and six statistics charts remain functional",
+    "Read-only screen renders and refreshes after ten seconds"
+  ],
+  "errors": []
+}

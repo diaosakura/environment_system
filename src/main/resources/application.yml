@@ -1,0 +1,35 @@
+server:
+  port: ${SERVER_PORT:8080}
+  address: 0.0.0.0
+  servlet:
+    session:
+      timeout: 60m
+      cookie:
+        http-only: true
+        same-site: lax
+spring:
+  application:
+    name: environment_system
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:environment_system}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&useSSL=false
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:root}
+    hikari:
+      maximum-pool-size: 5
+  jackson:
+    time-zone: Asia/Shanghai
+    date-format: yyyy-MM-dd HH:mm:ss
+  sql:
+    init:
+      mode: never
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    banner: false
+logging:
+  file:
+    name: logs/environment-system.log
+  level:
+    edu.net.environment: info

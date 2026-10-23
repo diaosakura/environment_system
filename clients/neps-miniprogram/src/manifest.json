@@ -1,0 +1,10 @@
+{
+  "name": "青境公众监督",
+  "appid": "__UNI__QINGJING_NEPS",
+  "description": "公众空气质量反馈与结果查询",
+  "versionName": "1.1.0",
+  "versionCode": "110",
+  "vueVersion": "3",
+  "uniStatistics": { "enable": false },
+  "mp-weixin": { "appid": "", "setting": { "urlCheck": false }, "usingComponents": true }
+}

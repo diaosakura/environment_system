@@ -1,0 +1,10 @@
+{
+  "status": "compiled-awaiting-runtime-verification",
+  "runtimeVerified": false,
+  "buildVerified": true,
+  "compiler": "uni-app 5.26 Vue3, mp-weixin production build",
+  "checkedDate": "2026-10-20",
+  "reason": "WeChat DevTools requires the account holder to sign in and manually enable its local service port before automated simulator verification.",
+  "artifact": "release/qingjing-neps-1.1.0-weixin.zip",
+  "nextCheck": "Open the compiled project using a permitted test AppID, enable local HTTP development settings, then run web/scripts/wechat-smoke.mjs."
+}

@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "checkedDate": "2026-10-20",
+  "platform": "Windows x64; alternate extracted path containing spaces; independent runtime, MySQL 3307 and HTTP 8082",
+  "functionalChecksPassed": true,
+  "cleanupCompleted": true,
+  "initialScriptExitCode": 1,
+  "initialScriptExitExplanation": "All functional assertions passed. Cleanup initially encountered a DLL briefly held during MySQL shutdown; after the instance exited, the scoped directory was removed and the original service was confirmed UP.",
+  "checks": [
+    "Candidate package SHA256 manifest: 142 source/artifact files verified",
+    "Local official archives freshly extracted for JDK17.0.9 and MySQL8.4.11",
+    "Isolated demo database initialized with 40 feedbacks and 20 measurements; inconsistent links 0",
+    "Exported current-data SQL restored to the isolated MySQL instance",
+    "Restored counts match public aggregate statistics",
+    "Packaged JAR health UP and PC homepage HTTP200 on8082",
+    "Destination environment checker passed under Windows PowerShell5.1",
+    "Original backend/database remained available on8080/3306",
+    "Offline HTML guide renders 12 sections and 7 tables"
+  ],
+  "wechatSdkSimulatorVerified": false,
+  "secondPhysicalComputerVerified": false
+}

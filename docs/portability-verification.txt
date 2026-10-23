@@ -1,0 +1,2 @@
+﻿Verified release extraction to E:\网工实训\environment_system\data\portability check 48497b07\environment_system
+JAVA_HOME supplied externally; SERVER_PORT=8082; /api/health=UP; homepage=200; stop script succeeded.

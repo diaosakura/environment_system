@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "checkedAt": "2026-10-20T03:06:47.603Z",
+  "platform": "Compiled WeChat page JavaScript + WXML event bindings, mocked platform transport, real Spring Boot/MySQL",
+  "wechatSimulatorVerified": false,
+  "feedbackId": 45,
+  "checks": [
+    "Empty-field validation",
+    "Invalid credentials rejected",
+    "JSESSIONID parsed and forwarded",
+    "Province and city change events",
+    "Grade selection event",
+    "Feedback input and real submission",
+    "Persisted feedback has matching fields and pending state"
+  ]
+}

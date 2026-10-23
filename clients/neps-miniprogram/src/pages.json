@@ -1,0 +1,18 @@
+{
+  "pages": [
+    { "path": "pages/login/index", "style": { "navigationBarTitleText": "青境 · 公众监督" } },
+    { "path": "pages/register/index", "style": { "navigationBarTitleText": "注册监督员" } },
+    {
+      "path": "pages/feedbacks/index",
+      "style": { "navigationBarTitleText": "我的反馈", "enablePullDownRefresh": true }
+    },
+    { "path": "pages/new/index", "style": { "navigationBarTitleText": "反馈空气质量" } },
+    { "path": "pages/detail/index", "style": { "navigationBarTitleText": "反馈进展" } },
+    { "path": "pages/settings/index", "style": { "navigationBarTitleText": "服务设置" } }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#f5f8f5",
+    "backgroundColor": "#f5f8f5"
+  }
+}

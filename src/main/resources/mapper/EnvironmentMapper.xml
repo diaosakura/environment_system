@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.net.environment.mapper.EnvironmentMapper">
+  <sql id="feedbackFilter">
+    <where>
+      <if test="owner != null">AND f.tel_id=#{owner}</if>
+      <if test="gridId != null">AND f.gm_id=#{gridId}</if>
+      <if test="state != null">AND f.state=#{state}</if>
+      <if test="provinceId != null">AND f.province_id=#{provinceId}</if>
+      <if test="cityId != null">AND f.city_id=#{cityId}</if>
+      <if test="start != null">AND f.submitted_at &gt;= #{start}</if>
+      <if test="end != null">AND f.submitted_at &lt; #{end}</if>
+      <if test="keyword != null">
+        AND (f.address LIKE CONCAT('%',#{keyword},'%') OR f.information LIKE CONCAT('%',#{keyword},'%'))
+      </if>
+    </where>
+  </sql>
+  <sql id="feedbackColumns">
+    f.af_id id,f.tel_id supervisorId,u.real_name supervisorName,
+    f.province_id provinceId,p.province_name provinceName,f.city_id cityId,c.city_name cityName,
+    f.address,f.information,f.estimated_grade estimatedGrade,
+    f.gm_id gridMemberId,g.gm_name gridMemberName,f.state,
+    f.submitted_at submittedAt,f.assigned_at assignedAt,f.confirmed_at confirmedAt,
+    s.so2_value so2,s.co_value co,s.spm_value pm25,
+    s.so2_level so2Level,s.co_level coLevel,s.spm_level pm25Level,s.aqi_id actualGrade
+  </sql>
+  <sql id="feedbackJoins">
+    FROM aqi_feedback f
+    JOIN supervisor u ON u.tel_id=f.tel_id
+    JOIN grid_province p ON p.province_id=f.province_id
+    JOIN grid_city c ON c.city_id=f.city_id
+    LEFT JOIN grid_member g ON g.gm_id=f.gm_id
+    LEFT JOIN statistics s ON s.feedback_id=f.af_id
+  </sql>
+  <select id="feedbackCount" resultType="long">
+    SELECT COUNT(*) FROM aqi_feedback f <include refid="feedbackFilter"/>
+  </select>
+  <select id="feedbacks" resultType="map">
+    SELECT <include refid="feedbackColumns"/> <include refid="feedbackJoins"/>
+    <include refid="feedbackFilter"/>
+    ORDER BY f.submitted_at DESC,f.af_id DESC LIMIT #{size} OFFSET #{offset}
+  </select>
+  <select id="feedback" resultType="map">
+    SELECT <include refid="feedbackColumns"/> <include refid="feedbackJoins"/>
+    WHERE f.af_id=#{id}
+  </select>
+  <select id="summary" resultType="map">
+    <![CDATA[
+    SELECT COUNT(*) total,COALESCE(SUM(aqi_id<=2),0) good,COALESCE(SUM(aqi_id>=3),0) polluted,
+      (SELECT COUNT(*) FROM aqi_feedback WHERE state=0) pending,
+      (SELECT COUNT(*) FROM aqi_feedback WHERE state=1) assigned,
+      (SELECT COUNT(*) FROM aqi_feedback) feedbackTotal,
+      COUNT(DISTINCT f.province_id) coveredProvinces,COUNT(DISTINCT f.city_id) coveredCities,
+      (SELECT COUNT(*) FROM grid_province) provinceTotal,(SELECT COUNT(*) FROM grid_city) cityTotal
+    FROM statistics s JOIN aqi_feedback f ON f.af_id=s.feedback_id
+    ]]>
+  </select>
+  <select id="distribution" resultType="map">
+    SELECT a.aqi_id grade,a.aqi_explain name,a.color,COUNT(s.id) count
+    FROM aqi a LEFT JOIN statistics s ON s.aqi_id=a.aqi_id
+    GROUP BY a.aqi_id,a.aqi_explain,a.color ORDER BY a.aqi_id
+  </select>
+  <select id="trend" resultType="map">
+    <![CDATA[
+    SELECT DATE_FORMAT(confirmed_at,'%Y-%m') month,COUNT(*) total,SUM(aqi_id>=3) polluted
+    FROM statistics WHERE confirmed_at>=#{since}
+    GROUP BY DATE_FORMAT(confirmed_at,'%Y-%m') ORDER BY month
+    ]]>
+  </select>
+  <select id="regions" resultType="map">
+    <![CDATA[
+    SELECT p.province_id id,p.province_name name,p.province_abbr abbr,COUNT(s.id) total,
+      COALESCE(SUM(s.aqi_id>=3),0) polluted,COALESCE(SUM(s.so2_level>=3),0) so2,
+      COALESCE(SUM(s.co_level>=3),0) co,COALESCE(SUM(s.spm_level>=3),0) pm25
+    FROM grid_province p LEFT JOIN aqi_feedback f ON f.province_id=p.province_id
+    LEFT JOIN statistics s ON s.feedback_id=f.af_id
+    GROUP BY p.province_id,p.province_name,p.province_abbr ORDER BY p.province_id
+    ]]>
+  </select>
+</mapper>
